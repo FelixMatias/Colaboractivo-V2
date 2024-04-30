@@ -1,7 +1,7 @@
 <template>
   <div>
-    <ImG src="/src/assets/Colaboractivo01.jpg" style="height: 7vh; position:fixed; left:0"/>
-    <ImG src="/src/assets/Open_BIM_Logo.png" style="height: 5vh; margin-top:1vh; position:fixed; right:0"/>
+    <ImG src="./Colaboractivo01.jpg" style="height: 7vh; position:fixed; left:0"/>
+    <ImG src="./Open_BIM_Logo.png" style="height: 5vh; margin-top:1vh; position:fixed; right:0"/>
   </div>
 
   <div id="topbar">  
@@ -29,9 +29,14 @@
    <span style="font-size: 18px;" class="material-icons">outlet</span>
    <span style="font-size: 10px; font-weight:bolder; color: gray ">{{ btnV5 }}</span>
    </button>
-   <button @click="Incendios" :class="btn6">
-   <span style="font-size: 18px;" class="material-icons">local_fire_department</span>
+   <button @click="Mecanicas" :class="btn6">
+   <span style="font-size: 18px;" class="material-icons">ac_unit</span>
    <span style="font-size: 10px; font-weight:bolder; color: gray ">{{ btnV6 }}</span>
+   </button>
+
+   <button @click="Incendios" :class="btn7">
+   <span style="font-size: 18px;" class="material-icons">local_fire_department</span>
+   <span style="font-size: 10px; font-weight:bolder; color: gray ">{{ btnV7 }}</span>
    </button>
    <button @click="BorrarDisciplinas" class="btn">
    <span style="font-size: 18px;" class="material-icons">delete_forever</span>
@@ -57,6 +62,7 @@ let btn3 = ref("btn")
 let btn4 = ref("btn")
 let btn5 = ref("btn")
 let btn6 = ref("btn")
+let btn7 = ref("btn")
 let btnV0 = ref(0)
 let btnV1 = ref(0)
 let btnV2 = ref(0)
@@ -64,6 +70,7 @@ let btnV3 = ref(0)
 let btnV4 = ref(0)
 let btnV5 = ref(0)
 let btnV6 = ref(0)
+let btnV7 = ref(0)
 
 
 /////////////////////////Cargar Disciplinas
@@ -98,6 +105,11 @@ function Electricidad() {
   let disciplina = "Electricidad"
   Disciplina(disciplina)
 }
+function Mecanicas() {
+  btn6.value = "btn2"
+  let disciplina = "Mecanicas"
+  Disciplina(disciplina)
+}
 function Incendios() {
   btn6.value = "btn2"
   let disciplina = "Incendios"
@@ -111,7 +123,7 @@ function Incendios() {
 async function Disciplina(disciplina: string) {
   const fragmentManager = viewer.tools.get(OBC.FragmentManager)
   //const fileRef = storageRef(storage, proyecto+"/"+disciplina+" Actual.frag")
-  const file = await fetch("/src/assets/"+disciplina+" Actual.frag")
+  const file = await fetch("./"+disciplina+" Actual.frag")
   
   //const blob = await getBlob(fileRef)
   //const data = blob.slice(0)
