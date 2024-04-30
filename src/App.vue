@@ -1,7 +1,7 @@
 <template>
   <div>
-    <ImG src="/public/Colaboractivo01.jpg" style="height: 7vh; position:fixed; left:0"/>
-    <ImG src="/public/Open_BIM_Logo.png" style="height: 5vh; margin-top:1vh; position:fixed; right:0"/>
+    <ImG src="/src/assets/Colaboractivo01.jpg" style="height: 7vh; position:fixed; left:0"/>
+    <ImG src="/src/assets/Open_BIM_Logo.png" style="height: 5vh; margin-top:1vh; position:fixed; right:0"/>
   </div>
 
   <div id="topbar">  
@@ -111,7 +111,7 @@ function Incendios() {
 async function Disciplina(disciplina: string) {
   const fragmentManager = viewer.tools.get(OBC.FragmentManager)
   //const fileRef = storageRef(storage, proyecto+"/"+disciplina+" Actual.frag")
-  const file = await fetch("../../public/"+disciplina+" Actual.frag")
+  const file = await fetch("/src/assets/"+disciplina+" Actual.frag")
   
   //const blob = await getBlob(fileRef)
   //const data = blob.slice(0)
