@@ -49,7 +49,7 @@
    <span style="font-size: 18px;" class="material-icons">delete_forever</span>
    </button>
  </div>
-  <IFCViewer />
+  <IFCViewer style="height: 84vh" />
 </template>
 
 <script setup lang="ts">
