@@ -50,20 +50,18 @@ export const viewer: ViewerSetup = async (viewer: OBC.Components, container: HTM
 
   //Para tomar medidas
 const dimensions = new OBC.LengthMeasurement(viewer)
-dimensions.snapDistance = 0.5
-container.ondblclick = () => dimensions.create()
-window.onkeydown = (event) => {
-  if (event.code === 'Delete' || event.code === 'Backspace') {
-  dimensions.delete()
-  }
-}
+dimensions.snapDistance = 1
+container.onclick = () => dimensions.create()
 
 // Herramienta de planos de corte
 const clipper = new OBC.SimpleClipper(viewer)
-container.ondblclick = () => clipper.create();
+container.ondblclick = () => clipper.create()
+
+//borrar dimensiones y planos de corte
 window.onkeydown = (event) => {
   if (event.code === 'Delete' || event.code === 'Backspace') {
   clipper.delete()
+  dimensions.delete()
   }
 }
 
@@ -73,19 +71,19 @@ window.onkeydown = (event) => {
     message: "Hi there from ExampleTool!",
     requiredSetting: 123
   })
-const disciplina = "Incendios Actual"
-//Subir IFC de disciplina
-function subirIfc(disciplina: string) {
+
+//Descarga coordinación
+function coordinacion() {
   if(!fragments.groups.length) return;
   const group = fragments.groups[0];
   const data = fragments.export(group);
   const blob = new Blob([data]);
-  const file = new File([blob], disciplina+".frag");
-  guardarFragments(file);
+  const file = new File([blob],"Coordinación.frag");
+  descargarFragments(file);
 }
 
 //Guardar Fragments
-function guardarFragments(file: File) {
+function descargarFragments(file: File) {
   const link = document.createElement("a");
   link.href = URL.createObjectURL(file);
   link.download = file.name;
@@ -108,17 +106,22 @@ const ifcModels = new OBC.Button(viewer)
 ifcModels.materialIcon = "download"
 ifcModels.tooltip = "Descargar IFCs"
 mainToolbar.addChild(ifcModels)
-ifcModels.onClick.add(() => subirIfc(disciplina))
+ifcModels.onClick.add(() => coordinacion())
 
-//Botones de herramientas
+//Botón de propiedades
 let propertiesBtn = propertiesProcessor.uiElement.get("main") as OBC.Button
 propertiesBtn.tooltip = "Propiedades"
-mainToolbar.addChild(
-  propertiesBtn,
-  dimensions.uiElement.get("main"),
-  clipper.uiElement.get("main")
-   //exampleTool.uiElement.get("activationBtn")
-)
+mainToolbar.addChild(propertiesBtn)
 
-  viewer.ui.addToolbar(mainToolbar)
+//Botón de dimensionado
+let dimensionsBtn = dimensions.uiElement.get("main") as OBC.Button
+dimensionsBtn.tooltip = "Dimensiones"
+mainToolbar.addChild(dimensionsBtn)
+
+let clipperBtn = clipper.uiElement.get("main") as OBC.Button
+clipperBtn.tooltip = "Planos de Corte"
+mainToolbar.addChild(clipperBtn)
+//exampleTool.uiElement.get("activationBtn")
+
+viewer.ui.addToolbar(mainToolbar)
 }
