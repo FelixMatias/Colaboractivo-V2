@@ -49,7 +49,11 @@
    <span style="font-size: 18px;" class="material-icons">delete_forever</span>
    </button>
  </div>
-  <IFCViewer style="height: 80vh" />
+  <IFCViewer />
+  <div>
+    <span style="font-size: large; font-weight: bolder">Trabajo de Fin de Master</span>
+    <ImG src="./Zigurat_Logo.png" style="height: 4vh; position:fixed; right:0; margin: 1vh 1vw;"/>
+  </div>
 </template>
 
 <script setup lang="ts">
