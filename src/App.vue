@@ -45,9 +45,9 @@
    <span style="font-size: 18px;" class="material-icons">local_fire_department</span>
    <span style="font-size: 10px; font-weight:bolder; color: gray ">{{ btnV9 }}</span>
    </button>
-   <button @click="BorrarDisciplinas" class="btnA">
+<!--   <button @click="BorrarDisciplinas" class="btnA">
    <span style="font-size: 18px;" class="material-icons">delete_forever</span>
-   </button>
+   </button> -->
  </div>
   <IFCViewer />
   <div>
@@ -61,6 +61,8 @@ import IFCViewer from 'vue-ifc-viewer'
 import * as OBC from "openbim-components"
 import { useViewersManager } from 'vue-ifc-viewer'
 import { ref } from "vue"
+import { ref as fbRef, getDownloadURL } from 'firebase/storage'
+import { storage } from './firebase'
 
 const viewersManager = useViewersManager()
 const viewer = viewersManager.get()
@@ -89,6 +91,7 @@ let btnV9 = ref(0)
 
 
 /////////////////////////Cargar Disciplinas
+
 
 function Emplazamiento() {
   btn0.value = "btn2"
@@ -146,35 +149,51 @@ function Incendios() {
 //const proyecto = "Edificio Wezig"
 
 async function Disciplina(disciplina: string) {
-  const fragmentManager = viewer.tools.get(OBC.FragmentManager)
-  //const fileRef = storageRef(storage, proyecto+"/"+disciplina+" Actual.frag")
-  const file = await fetch("./"+disciplina+" Actual.frag")
+  //disciplina+" Actual.frag")
+  getDownloadURL(fbRef(storage,disciplina+" Actual.frag"))
+  .then((url) => {
+    const xhr = new XMLHttpRequest();
+
+  xhr.responseType = 'arraybuffer';
+  xhr.onload = () => {
+    const fragmentManager = viewer.tools.get(OBC.FragmentManager)    
+    const array = xhr.response;
+    const buffer = new Uint8Array(array);
+    fragmentManager.load(buffer)
+  };
+     
+    xhr.open('GET', url);
+    xhr.send();
+    
+  })
   
-  //const blob = await getBlob(fileRef)
-  //const data = blob.slice(0)
-  const data = await file.arrayBuffer();
-  const buffer = new Uint8Array(data);
-  const group = await fragmentManager.load(buffer);
-  console.log(group)
+  //const fragmentManager = viewer.tools.get(OBC.FragmentManager)
+  
+  //const file = await fetch("./"+disciplina+" Actual.frag")
+  
+  //const data = await file.arrayBuffer();
+  //const buffer = new Uint8Array(data);
+  //const group = await fragmentManager.load(buffer);
+  //console.log(group)
 }
 
 
 /////////////////////////Borrar Disciplinas
-async function BorrarDisciplinas() {
-  btn0.value = "btnA"
-  btn1.value = "btnA"
-  btn2.value = "btnA"
-  btn3.value = "btnE"
-  btn4.value = "btnE"
-  btn5.value = "btnE"
-  btn6.value = "btnI"
-  btn7.value = "btnI"
-  btn8.value = "btnI"
-  btn9.value = "btnI"
+//async function BorrarDisciplinas() {
+//  btn0.value = "btnA"
+//  btn1.value = "btnA"
+//  btn2.value = "btnA"
+//  btn3.value = "btnE"
+//  btn4.value = "btnE"
+//  btn5.value = "btnE"
+//  btn6.value = "btnI"
+//  btn7.value = "btnI"
+//  btn8.value = "btnI"
+//  btn9.value = "btnI"
  
-  const fragmentManager = viewer.tools.get(OBC.FragmentManager)
-  fragmentManager.dispose()
-}
+//  const fragmentManager = viewer.tools.get(OBC.FragmentManager)
+//  fragmentManager.dispose()
+//}
 
 </script>
 
