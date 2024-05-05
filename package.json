@@ -10,10 +10,12 @@
   },
   "dependencies": {
     "bim-fragment": "1.5.0",
+    "firebase": "^10.11.1",
     "openbim-components": "1.5.0",
     "three": "0.160.1",
     "vue": "^3.3.11",
     "vue-ifc-viewer": "1.0.2",
+    "vue-router": "^4.3.2",
     "web-ifc": "0.0.53"
   },
   "devDependencies": {
